@@ -1,14 +1,15 @@
 package se.lexicon.model;
 
 import java.util.Date;
+import java.util.HashMap;
 import java.util.Map;
 
 
 public class BookingManager implements BookingManagerInterface {
 	
-	static private Map<Integer, Customer> customerMap;
-	static private Map<Integer, Flight> flightMap;
-	static private Map<Integer, Ticket> ticketMap;
+	static private Map<Integer, Customer> customerMap = new HashMap<>();
+	static private Map<Integer, Flight> flightMap = new HashMap<>();
+	static private Map<Integer, Ticket> ticketMap = new HashMap<>();
 	
 	 static private int customerID = 0;
 	 static private int ticketID = 0;;
