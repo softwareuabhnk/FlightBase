@@ -2,7 +2,10 @@ package se.lexicon.model;
 
 import java.util.Date;
 import java.util.HashMap;
+import java.util.IntSummaryStatistics;
 import java.util.Map;
+import java.util.function.Predicate;
+import java.util.stream.Collectors;
 
 
 public class BookingManager implements BookingManagerInterface {
@@ -11,9 +14,11 @@ public class BookingManager implements BookingManagerInterface {
 	static private Map<Integer, Flight> flightMap = new HashMap<>();
 	static private Map<Integer, Ticket> ticketMap = new HashMap<>();
 	
-	 static private int customerID = 0;
-	 static private int ticketID = 0;;
-	 static private int flightID = 0;
+	static private double profitLevel = 30;
+	
+	static private int customerID = 0;
+	static private int ticketID = 0;;
+	static private int flightID = 0;
 	
 	
 	 public BookingManager() {
@@ -39,6 +44,8 @@ public class BookingManager implements BookingManagerInterface {
 	 }	
 	 
 	 public Flight getFlight(int flightID) {
+
+		//TODO Change impl to lambda?
 		 
 		 for (Flight nextFlight : flightMap.values()) {
 			
@@ -49,20 +56,19 @@ public class BookingManager implements BookingManagerInterface {
 		return null;	 
 	 }
 	  
-	 public void cancelFligth(int flightID) {
+	 public void cancelFlight(int flightID) {
 		 flightMap.remove(flightID);
 	 }
-
-	 
+ 
 	
-	public int registerCustomer (String name, String adress, String phoneNumber) {
+	public Customer registerCustomer (String name, String adress, String phoneNumber) {
 		
 		customerID++;
 		Customer customer = new Customer(customerID, name, adress, phoneNumber);
 		
 		customerMap.put(customerID, customer);
 		
-		return customerID;
+		return customer;
 	}
 	
 	public void deleteCustomer(int customerID) {
@@ -71,6 +77,8 @@ public class BookingManager implements BookingManagerInterface {
 	
 	
 	public Customer getCustomer (int customerID) {
+		
+		//TODO Change impl to lambda?
 		
 		for (Customer nextCustomer : customerMap.values()) {
 			
@@ -85,10 +93,13 @@ public class BookingManager implements BookingManagerInterface {
 		
 		ticketID++;;
 		
-		//int seatNumber = flight.reserveSeat(ticket);
-		boolean payed = false;
-		int seatNumber = 5;
-		 Ticket ticket = new Ticket(ticketID, customerID, flightID, seatNumber, ticketType, payed);
+		Flight flight  = getFlight(flightID);
+		Customer customer = getCustomer(customerID);
+		
+		
+		int seatNumber = flight.reserveSeat(ticketType, customer);
+		boolean payed = true;
+		Ticket ticket = new Ticket(ticketID, customerID, flightID, seatNumber, ticketType, payed);
 		 
 		 ticketMap.put(flightID, ticket);
 	
@@ -96,23 +107,46 @@ public class BookingManager implements BookingManagerInterface {
 		
 	}
 	
-	public void unreserveTicket(int ticketID) {
-		
-		//remove from bookingMap
-		//unreserveSeat(flightID)
-		 ticketMap.remove(ticketID);
-		
-	}
 	
-	public Ticket getTicket(int ticketID) {
+	public Ticket getTicket (int ticketID) {
+		
+			//TODO Change impl to lambda?
 		
 		for (Ticket nextTicket : ticketMap.values()) {
 			
-			if (nextTicket.getTicketID() == ticketID) {
+			if (nextTicket.getCustomerID() == customerID) {
 				return nextTicket;
 			}	
 		}	
 		return null;
+	}
+	
+	public void unreserveTicket(int ticketID) {
 		
-	}	
+		//TODO unreserveSeat(flightID)
+		 ticketMap.remove(ticketID);
+		
+	}
+	
+
+	public IntSummaryStatistics getTotalIncome() {
+		
+		Predicate<Ticket> payed = p -> p.isPayed();
+					
+		IntSummaryStatistics statistics = ticketMap.values().stream().filter(payed).collect(Collectors.summarizingInt(Ticket::getTicketPrice));
+		
+		return statistics;
+	}
+	
+	public double getTotalProfit() {
+		
+				
+		IntSummaryStatistics statistics = getTotalIncome();
+		double totalProfit = statistics.getAverage() * (profitLevel/100);
+		
+		return totalProfit;
+	}
+	
+
+
 }
