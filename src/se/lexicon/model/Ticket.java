@@ -2,6 +2,7 @@ package se.lexicon.model;
 
 public class Ticket {
 
+	private int ticketID;
 	private int customerID;
 	private int flightID;
 	private int seatNumber;
@@ -11,8 +12,9 @@ public class Ticket {
 	
 	
 
-	public Ticket(int customerID, int flightID, int seatNumber, TicketType ticketType, boolean payed) {
+	public Ticket(int ticketID, int customerID, int flightID, int seatNumber, TicketType ticketType, boolean payed) {
 		super();
+		this.ticketID = ticketID;
 		this.customerID = customerID;
 		this.flightID = flightID;
 		this.seatNumber = seatNumber;
@@ -24,6 +26,11 @@ public class Ticket {
 		} else {	
 			this.ticketPrice=20000;
 		}
+	}
+
+
+	public int getTicketID() {
+		return ticketID;
 	}
 
 	public int getCustomerID() {
@@ -58,11 +65,14 @@ public class Ticket {
 		return ticketPrice;
 	}
 
+
 	@Override
 	public String toString() {
-		return "Ticket [customerID=" + customerID + ", flightID=" + flightID + ", seatNumber=" + seatNumber
-				+ ", ticketType=" + ticketType + ", payed=" + payed + ", ticketPrice=" + ticketPrice + "]";
+		return "Ticket [ticketID=" + ticketID + ", customerID=" + customerID + ", flightID=" + flightID
+				+ ", seatNumber=" + seatNumber + ", ticketType=" + ticketType + ", payed=" + payed + ", ticketPrice="
+				+ ticketPrice + "]";
 	}
+
 
 	
 	
