@@ -2,9 +2,12 @@ package se.lexicon.model;
 
 public interface BookingManagerInterface {
 	
-	public int registerCustomer(String name, String address, String phoneNumber);
+	public int registerCustomer(String name, String adress, String phoneNumber);
 	
-	public int reserveBooking(int customerID, int flightID, TicketType ticket);
+	public Customer getCustomer(int customerID);
+	
+	public int reserveTicket(int customerID, int flightID, TicketType ticket);
 
 }
 
+ 
