@@ -11,14 +11,13 @@ public class Ticket {
 	
 	
 
-	public Ticket(int customerID, int flightID, int seatNumber, TicketType ticketType, boolean payed, int ticketPrice) {
+	public Ticket(int customerID, int flightID, int seatNumber, TicketType ticketType, boolean payed) {
 		super();
 		this.customerID = customerID;
 		this.flightID = flightID;
 		this.seatNumber = seatNumber;
 		this.ticketType = ticketType;
 		this.payed = payed;
-		this.ticketPrice = ticketPrice;
 		
 		if (ticketType==TicketType.ECONOMY) {
 			this.ticketPrice=5000;
