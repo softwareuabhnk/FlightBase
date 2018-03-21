@@ -1,13 +1,14 @@
 package se.lexicon.model;
 
+import java.util.Date;
 import java.util.Map;
 
 
 public class BookingManager implements BookingManagerInterface {
 	
 	static private Map<Integer, Customer> customerMap;
-	//static private map<Integer, Flight> flightMap
-	static private map<Integer, Ticket> ticketMap;
+	static private Map<Integer, Flight> flightMap;
+	static private Map<Integer, Ticket> ticketMap;
 	
 	 static private int customerID = 0;
 	 static private int ticketID = 0;;
@@ -17,26 +18,38 @@ public class BookingManager implements BookingManagerInterface {
 	 public BookingManager() {
 		 
 		 // One flight is created at start of bookingManager
-		 createFlight();
+		 
+		 Date departureTime = new Date();
+		 Date arrivalTime = new Date();
+		 String origin = "Stockholm";
+		 String destination = "Helsinki";
+		 createFlight(departureTime, arrivalTime, origin, destination);
 	 }
 	 
-	 public int createFlight() {
+	 public int createFlight(Date departureTime, Date arrivalTime, String origin, String destination ) {
 		 
-		 flightID++;
+		 flightID++;	
 		 
-		 //Flight flight = new Flight(int flightID .......);
-		 //flightMap.put(flightID, flight);
+		 Flight flight = new Flight(flightID, departureTime, arrivalTime, origin, destination);
+		 
+		 flightMap.put(flightID, flight);
 		 
 		 return flightID;
 	 }	
 	 
-	 public void getfligth(int flightID) {
+	 public Flight getFlight(int flightID) {
 		 
+		 for (Flight nextFlight : flightMap.values()) {
+			
+			if (nextFlight.getFlightID() == flightID) {
+				return nextFlight;
+			}	
+		}	
+		return null;	 
 	 }
-	 
-	 
+	  
 	 public void cancelFligth(int flightID) {
-		 //flightmap.remove(flightID);
+		 flightMap.remove(flightID);
 	 }
 
 	 
@@ -67,33 +80,38 @@ public class BookingManager implements BookingManagerInterface {
 		return null;
 	}
 	
-	public int reserveTicket(int customerID, int flightID, TicketType ticket) {
+	public int reserveTicket(int customerID, int flightID, TicketType ticketType) {
 		
 		ticketID++;;
 		
 		//int seatNumber = flight.reserveSeat(ticket);
+		boolean payed = false;
 		int seatNumber = 5;
-		//int booking = new Booking(......);
-		
+		 Ticket ticket = new Ticket(ticketID, customerID, flightID, seatNumber, ticketType, payed);
+		 
+		 ticketMap.put(flightID, ticket);
+	
 		return ticketID;
 		
 	}
 	
-	public void unreserveBooking(int bookingID) {
+	public void unreserveTicket(int ticketID) {
 		
 		//remove from bookingMap
 		//unreserveSeat(flightID)
+		 ticketMap.remove(ticketID);
 		
 	}
 	
-	public void getBooking(int bookingID) {
+	public Ticket getTicket(int ticketID) {
 		
-		//bookingMap.get(bookingID)
+		for (Ticket nextTicket : ticketMap.values()) {
+			
+			if (nextTicket.getTicketID() == ticketID) {
+				return nextTicket;
+			}	
+		}	
+		return null;
 		
-		//return booking	
 	}	
-	
-
-
-
 }

@@ -7,6 +7,10 @@ public interface BookingManagerInterface {
 	public Customer getCustomer(int customerID);
 	
 	public int reserveTicket(int customerID, int flightID, TicketType ticket);
+	
+	public Ticket getTicket(int ticketID);
+	
+	public Flight getFlight(int flightID);
 
 }
 
