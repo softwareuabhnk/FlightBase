@@ -2,6 +2,6 @@ package se.lexicon.model;
 
 public interface FlightInterface {
 
-		int	reserveSeat(TicketType ticketType);
+		public int	reserveSeat(TicketType ticketType);
 	
 }
