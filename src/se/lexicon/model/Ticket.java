@@ -1,6 +1,6 @@
 package se.lexicon.model;
 
-public abstract class Ticket {
+public class Ticket {
 
 	private int customerID;
 	private int flightID;
