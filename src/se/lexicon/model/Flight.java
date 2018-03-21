@@ -70,6 +70,12 @@ public class Flight implements FlightInterface {
 
 
 
+	public int getFlightID() {
+		return flightID;
+	}
+
+
+
 	@Override
 	public String toString() {
 		return "Flight [flightID=" + flightID + ", departureTime=" + departureTime + ", arrivalTime=" + arrivalTime
