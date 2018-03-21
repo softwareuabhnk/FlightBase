@@ -59,6 +59,12 @@ public abstract class Ticket {
 		return ticketPrice;
 	}
 
+	@Override
+	public String toString() {
+		return "Ticket [customerID=" + customerID + ", flightID=" + flightID + ", seatNumber=" + seatNumber
+				+ ", ticketType=" + ticketType + ", payed=" + payed + ", ticketPrice=" + ticketPrice + "]";
+	}
+
 	
 	
 	
