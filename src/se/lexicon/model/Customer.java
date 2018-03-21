@@ -21,6 +21,10 @@ public class Customer {
 		return customerID;
 	}
 
+	public void setCustomerID(int customerid) {
+		this.customerID = customerid;
+	}
+	
 	public String getName() {
 		return name;
 	}
