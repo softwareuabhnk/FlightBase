@@ -44,7 +44,7 @@ public class Flight implements FlightInterface {
 
 
 	
-	public int	reserveSeat(TicketType ticketType) {
+	public int	reserveSeat(TicketType ticketType, Customer customer) {
 		int reservedSeatNumber;
 		
 		Seat seat=null;
@@ -57,14 +57,24 @@ public class Flight implements FlightInterface {
 			seat=businessSeats.stream().filter(e -> e.isOccupied()==false).findFirst().get();
 			
 		}
-		
-		reservedSeatNumber=seat.getNumber();
+
 		seat.setOccupied(true);
-		System.out.println(seat);
+		seat.setCustomer(customer);
+		reservedSeatNumber=seat.getNumber();
+//		System.out.println(seat);
 
 		
 		return reservedSeatNumber;
 		
+	}
+
+
+
+	@Override
+	public String toString() {
+		return "Flight [flightID=" + flightID + ", departureTime=" + departureTime + ", arrivalTime=" + arrivalTime
+				+ ", origin=" + origin + ", destination=" + destination + ", economySeats=" + economySeats
+				+ ", businessSeats=" + businessSeats + "]";
 	}
 	
 	
