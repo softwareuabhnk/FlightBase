@@ -55,7 +55,14 @@ public class BookingManager implements BookingManagerInterface {
 		}	
 		return null;	 
 	 }
-	  
+	 
+	 
+	  public Map<Integer, Flight >getFlights() {
+
+		  return flightMap;	 
+	 }
+	 
+	 
 	 public void cancelFlight(int flightID) {
 		 flightMap.remove(flightID);
 	 }
@@ -88,6 +95,12 @@ public class BookingManager implements BookingManagerInterface {
 		}	
 		return null;
 	}
+	
+	public Map<Integer, Customer> getCustomers (int customerID) {
+		
+		return customerMap;
+	}
+	
 	
 	public int reserveTicket(int customerID, int flightID, TicketType ticketType) {
 		
