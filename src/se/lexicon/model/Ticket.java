@@ -1,5 +1,7 @@
 package se.lexicon.model;
 
+import se.lexicon.model.food.FoodOrder;
+
 public class Ticket {
 
 	private int ticketID;
@@ -9,7 +11,7 @@ public class Ticket {
 	private TicketType ticketType;
 	private boolean payed;
 	private int ticketPrice;
-	
+	private FoodOrder foodOrder;
 	
 
 	public Ticket(int ticketID, int customerID, int flightID, int seatNumber, TicketType ticketType, boolean payed) {
@@ -61,8 +63,17 @@ public class Ticket {
 	}
 
 
+	public FoodOrder getFoodOrder() {
+		return foodOrder;
+	}
+
+	public void setFoodOrder(FoodOrder foodOrder) {
+		this.foodOrder = foodOrder;
+	}
+
+
 	public int getTicketPrice() {
-		return ticketPrice;
+		return ticketPrice+foodOrder.getTotal();
 	}
 
 
@@ -70,11 +81,10 @@ public class Ticket {
 	public String toString() {
 		return "Ticket [ticketID=" + ticketID + ", customerID=" + customerID + ", flightID=" + flightID
 				+ ", seatNumber=" + seatNumber + ", ticketType=" + ticketType + ", payed=" + payed + ", ticketPrice="
-				+ ticketPrice + "]";
+				+ ticketPrice + ", " + (foodOrder!=null ? "Food reserved" : "No food reserved") + "]";
 	}
 
 
-	
-	
+
 	
 }
