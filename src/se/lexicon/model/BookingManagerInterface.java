@@ -29,6 +29,10 @@ public interface BookingManagerInterface {
 	public IntSummaryStatistics getTotalIncome();
 	
 	public double getTotalProfit();
+	
+	public String getMenu(TicketType type);
+	
+	public void reserveFood (int ticketID, int items[]);
 
 }
 

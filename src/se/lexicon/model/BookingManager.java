@@ -13,6 +13,7 @@ public class BookingManager implements BookingManagerInterface {
 	static private Map<Integer, Customer> customerMap = new HashMap<>();
 	static private Map<Integer, Flight> flightMap = new HashMap<>();
 	static private Map<Integer, Ticket> ticketMap = new HashMap<>();
+	//static private Map<Integerm FoodOrder> foodOrderMap = new HashMap<>;
 	
 	static private double profitLevel = 30;
 	
@@ -22,6 +23,10 @@ public class BookingManager implements BookingManagerInterface {
 	
 	
 	 public BookingManager() {
+		 
+		 
+		 //Instantiate class menu 
+		 
 		 
 		 // One flight is created at start of bookingManager
 		 
@@ -141,8 +146,29 @@ public class BookingManager implements BookingManagerInterface {
 		
 	}
 	
+	
+	public String getMenu(TicketType type) {
+		
+		// getMeny from class Menu
+		
+		String string =" ";
+		return string;
+	}
+	
+	
+	public  void reserveFood (int ticketID, int items[]) {
+		
+		//TODO
+		// instantiate class FoodOrder
+		// populate instance foodOrder with foodItems	
+		// add instance foodOrder to ticket
+		// update ticket with foodPrice
+		// update total price
+	}
 
 	public IntSummaryStatistics getTotalIncome() {
+		
+		//TODO Calculate stats on total price
 		
 		Predicate<Ticket> payed = p -> p.isPayed();
 					
