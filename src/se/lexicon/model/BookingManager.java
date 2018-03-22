@@ -1,5 +1,8 @@
 package se.lexicon.model;
 
+
+
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.IntSummaryStatistics;
@@ -7,13 +10,18 @@ import java.util.Map;
 import java.util.function.Predicate;
 import java.util.stream.Collectors;
 
+import se.lexicon.model.food.FoodItem;
+import se.lexicon.model.food.FoodOrder;
+import se.lexicon.model.food.Menu;
+
 
 public class BookingManager implements BookingManagerInterface {
 	
 	static private Map<Integer, Customer> customerMap = new HashMap<>();
 	static private Map<Integer, Flight> flightMap = new HashMap<>();
 	static private Map<Integer, Ticket> ticketMap = new HashMap<>();
-	//static private Map<Integerm FoodOrder> foodOrderMap = new HashMap<>;
+	
+	static Menu menu = null;
 	
 	static private double profitLevel = 30;
 	
@@ -23,13 +31,11 @@ public class BookingManager implements BookingManagerInterface {
 	
 	
 	 public BookingManager() {
-		 
-		 
-		 //Instantiate class menu 
-		 
-		 
-		 // One flight is created at start of bookingManager
-		 
+				  
+		 //One menu is created at start of booking manager 
+		 menu=new Menu();
+
+		// One flight is created at start of bookingManager 
 		 Date departureTime = new Date();
 		 Date arrivalTime = new Date();
 		 String origin = "Stockholm";
@@ -132,7 +138,7 @@ public class BookingManager implements BookingManagerInterface {
 		
 		for (Ticket nextTicket : ticketMap.values()) {
 			
-			if (nextTicket.getCustomerID() == customerID) {
+			if (nextTicket.getTicketID() == ticketID) {
 				return nextTicket;
 			}	
 		}	
@@ -141,7 +147,9 @@ public class BookingManager implements BookingManagerInterface {
 	
 	public void unreserveTicket(int ticketID) {
 		
-		//TODO unreserveSeat(flightID)
+		//TODO unreserveSeat - Currently no method available 
+		// Flight flight  = getFlight(flightID);
+		//flight.unreserveSeat(seatNumber);
 		 ticketMap.remove(ticketID);
 		
 	}
@@ -149,21 +157,28 @@ public class BookingManager implements BookingManagerInterface {
 	
 	public String getMenu(TicketType type) {
 		
-		// getMeny from class Menu
-		
-		String string =" ";
-		return string;
+		return menu.getMenu(type);
 	}
 	
 	
-	public  void reserveFood (int ticketID, int items[]) {
+	public  void reserveFood (int ticketID, TicketType type, ArrayList<Integer> arrayItems) {
 		
-		//TODO
-		// instantiate class FoodOrder
-		// populate instance foodOrder with foodItems	
-		// add instance foodOrder to ticket
-		// update ticket with foodPrice
-		// update total price
+		// Instantiate class FoodOrder
+		FoodOrder foodOrder = new FoodOrder();
+			
+		 for (Integer index : arrayItems) { 		
+		
+			 //Get food item with item index
+			 FoodItem foodItem = menu.getFoodItem(type, index);
+	
+			 // Populate instance foodOrder with foodItems
+			 foodOrder.add(foodItem);		
+		}
+		
+		// Add instance foodOrder to ticket
+		Ticket ticket = getTicket(ticketID);
+		ticket.setFoodOrder(foodOrder);
+		 
 	}
 
 	public IntSummaryStatistics getTotalIncome() {
