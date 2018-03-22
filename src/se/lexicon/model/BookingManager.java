@@ -96,7 +96,7 @@ public class BookingManager implements BookingManagerInterface {
 		return null;
 	}
 	
-	public Map<Integer, Customer> getCustomers (int customerID) {
+	public Map<Integer, Customer> getCustomers () {
 		
 		return customerMap;
 	}
