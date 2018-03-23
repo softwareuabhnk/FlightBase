@@ -44,6 +44,21 @@ public class BookingManager implements BookingManagerInterface {
 		 String origin = "Stockholm";
 		 String destination = "Helsinki";
 		 createFlight(departureTime, arrivalTime, origin, destination);
+		 
+		 // Specifically for Demo: Create 3 customers at startof bookingManager
+		 
+		customerID++;
+		Customer customer1 = new Customer(customerID, "Mike Andersson" , "Street 21", "123 456");		
+		customerMap.put(customerID, customer1);
+		
+		customerID++;
+		Customer customer2 = new Customer(customerID, "Stan Smith" , "River 9", "111 222");		
+		customerMap.put(customerID, customer2);
+		
+		customerID++;
+		Customer customer = new Customer(customerID, "Julia Jansson" , " 21", "153 459");		
+		customerMap.put(customerID, customer);
+				 
 	 }
 	 
 	 public int createFlight(Date departureTime, Date arrivalTime, String origin, String destination ) {
