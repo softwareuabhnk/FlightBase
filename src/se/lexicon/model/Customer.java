@@ -40,8 +40,10 @@ public class Customer {
 
 	@Override
 	public String toString() {
-		return "Customer [customerID=" + customerID + ", name=" + name + ", adress=" + adress + ", phoneNumber="
-				+ phoneNumber + "]";
+		return "Customer ID: " + customerID
+				+ "\nname: " + name
+				+ "\nadress: " + adress
+				+ "\nphone: " + phoneNumber;
 	}
 	
 	
