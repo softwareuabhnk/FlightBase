@@ -79,9 +79,14 @@ public class Ticket {
 
 	@Override
 	public String toString() {
-		return "Ticket [ticketID=" + ticketID + ", customerID=" + customerID + ", flightID=" + flightID
-				+ ", seatNumber=" + seatNumber + ", ticketType=" + ticketType + ", payed=" + payed + ", ticketPrice="
-				+ ticketPrice + ", " + (foodOrder!=null ? "Food reserved" : "No food reserved") + "]";
+		return "Ticket ID:\t" + ticketID
+				+ "\ncustomer ID:\t" + customerID
+				+ "\nflight ID:\t" + flightID
+				+ "\nseatNumber:\t" + seatNumber
+				+ "\ntype:\t\t" + (ticketType==TicketType.BUSINESS ? "Business Class" : "Economy Class")
+				+ "\npayed:\t\t" + (payed==true ? "Yes" : "No")
+				+ "\nprice:\t\t" + ticketPrice
+				+ "\nfood:\t\t" + (foodOrder!=null ? "Food reserved" : "No food reserved");
 	}
 
 
