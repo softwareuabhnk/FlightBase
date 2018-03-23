@@ -65,7 +65,7 @@ public class Flight implements FlightInterface {
 
 		} else {
 			// Business
-			if (0 == economySeats.stream().filter(e -> e.isOccupied() == false).count()) {
+			if (0 == businessSeats.stream().filter(e -> e.isOccupied() == false).count()) {
 				throw new BusinessClassFullException();
 			} else {
 				seat = businessSeats.stream().filter(e -> e.isOccupied() == false).findFirst().get();
