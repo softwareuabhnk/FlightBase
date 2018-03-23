@@ -15,6 +15,7 @@ public class Menu {
 		super();
 		economyItems.add(new FoodItem("Fish and Chips", 72));
 		economyItems.add(new FoodItem("Hamburger w Pommes Frites", 68));
+		economyItems.add(new FoodItem("Rice and Curry", 58));
 
 		businessItems.add(new FoodItem("Hamburger w Pommes Frites", 101));
 		businessItems.add(new FoodItem("Filet Mignon", 112));
@@ -30,13 +31,13 @@ public class Menu {
 		if (type==TicketType.ECONOMY) {
 		
 			for ( int i=0; i<economyItems.size(); i++ ) {
-				sb.append(Integer.toString(i+1));
+				sb.append("["+Integer.toString(i+1)+"]");
 				sb.append(" "+economyItems.get(i).getDescription()+" ");
 				sb.append(economyItems.get(i).getPrice()+" kr\n");			
 			}
 		} else {
 			for ( int i=0; i<businessItems.size(); i++ ) {
-				sb.append(Integer.toString(i+1));
+				sb.append("["+Integer.toString(i+1)+"]");
 				sb.append(" "+businessItems.get(i).getDescription()+" ");
 				sb.append(businessItems.get(i).getPrice()+" kr\n");			
 			}			
