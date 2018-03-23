@@ -6,6 +6,8 @@ import java.util.IntSummaryStatistics;
 import java.util.List;
 import java.util.Map;
 
+import se.lexicon.exception.FlightFullException;
+
 public interface BookingManagerInterface {
 	
 	public Customer registerCustomer(String name, String adress, String phoneNumber);
@@ -14,7 +16,7 @@ public interface BookingManagerInterface {
 	
 	public Map<Integer, Customer> getCustomers();
 	
-	public int reserveTicket(int customerID, int flightID, TicketType ticket);
+	public int reserveTicket(int customerID, int flightID, TicketType type) throws FlightFullException;
 	
 	public void unreserveTicket(int ticketID);
 	

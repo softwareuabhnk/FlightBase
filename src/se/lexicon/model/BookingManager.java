@@ -10,6 +10,9 @@ import java.util.Map;
 import java.util.function.Predicate;
 import java.util.stream.Collectors;
 
+import se.lexicon.exception.BusinessClassFullException;
+import se.lexicon.exception.EconomyClassFullException;
+import se.lexicon.exception.FlightFullException;
 import se.lexicon.model.food.FoodItem;
 import se.lexicon.model.food.FoodOrder;
 import se.lexicon.model.food.Menu;
@@ -113,7 +116,7 @@ public class BookingManager implements BookingManagerInterface {
 	}
 	
 	
-	public int reserveTicket(int customerID, int flightID, TicketType ticketType) {
+	public int reserveTicket(int customerID, int flightID, TicketType type) throws FlightFullException {
 		
 		ticketID++;;
 		
@@ -121,14 +124,27 @@ public class BookingManager implements BookingManagerInterface {
 		Customer customer = getCustomer(customerID);
 		
 		
-		int seatNumber = flight.reserveSeat(ticketType, customer);
-		boolean payed = true;
-		Ticket ticket = new Ticket(ticketID, customerID, flightID, seatNumber, ticketType, payed);
-		 
-		 ticketMap.put(flightID, ticket);
-	
-		return ticketID;
+	  try {
 		
+		int seatNumber = flight.reserveSeat(type, customer);
+		boolean payed = true;
+		Ticket ticket = new Ticket(ticketID, customerID, flightID, seatNumber, type, payed);
+		 
+		ticketMap.put(flightID, ticket);
+		
+	   } catch (FlightFullException e) {
+		      
+		   if (e instanceof EconomyClassFullException) {
+			   
+			   	throw new EconomyClassFullException();
+
+		   } else if (e instanceof BusinessClassFullException) {
+			   
+			   throw new BusinessClassFullException();
+
+		   }
+	   }		
+	  return ticketID;
 	}
 	
 	
