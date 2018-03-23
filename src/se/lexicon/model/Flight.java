@@ -13,15 +13,15 @@ import se.lexicon.model.TicketType;
 
 public class Flight implements FlightInterface {
 
-	int flightID;
+	private int		flightID;
 
-	Date departureTime;
-	Date arrivalTime;
-	String origin;
-	String destination;
+	private Date	departureTime;
+	private Date	arrivalTime;
+	private String	origin;
+	private String	destination;
 
-	List<Seat> economySeats = new ArrayList<Seat>(5);
-	List<Seat> businessSeats = new ArrayList<Seat>(5);
+	private List<Seat> economySeats = new ArrayList<Seat>(5);
+	private List<Seat> businessSeats = new ArrayList<Seat>(5);
 
 	public Flight(int flightID, Date departureTime, Date arrivalTime, String origin, String destination) {
 		super();
@@ -43,6 +43,15 @@ public class Flight implements FlightInterface {
 
 	}
 
+	public int getFreeSeats(TicketType ticketType) {
+		if (ticketType == TicketType.ECONOMY) {
+			return (int) economySeats.stream().filter(e -> e.isOccupied() == false).count();
+		} else {
+			return (int) businessSeats.stream().filter(e -> e.isOccupied() == false).count();			
+		}
+	}
+	
+	
 	public int reserveSeat(TicketType ticketType, Customer customer) throws FlightFullException {
 		int reservedSeatNumber;
 

@@ -40,10 +40,10 @@ public class Customer {
 
 	@Override
 	public String toString() {
-		return "Customer ID: " + customerID
-				+ "\nname: " + name
-				+ "\nadress: " + adress
-				+ "\nphone: " + phoneNumber;
+		return "Customer ID:\t" + customerID
+				+ "\nname:\t\t" + name
+				+ "\nadress:\t\t" + adress
+				+ "\nphone:\t\t" + phoneNumber;
 	}
 	
 	
