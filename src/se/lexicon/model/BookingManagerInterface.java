@@ -1,7 +1,9 @@
 package se.lexicon.model;
 
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.IntSummaryStatistics;
+import java.util.List;
 import java.util.Map;
 
 public interface BookingManagerInterface {
@@ -29,6 +31,10 @@ public interface BookingManagerInterface {
 	public IntSummaryStatistics getTotalIncome();
 	
 	public double getTotalProfit();
+	
+	public String getMenu(TicketType type);
+	
+	public void reserveFood (int ticketID, TicketType type, ArrayList<Integer> arrayItems);
 
 }
 

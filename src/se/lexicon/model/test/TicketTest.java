@@ -12,9 +12,9 @@ public class TicketTest {
 	@Test
 	public void test() {
 
-		Ticket t=new Ticket(2,1,234,5,TicketType.BUSINESS,false);
-	
-		assertEquals("Ticket [customerID=1, flightID=234, seatNumber=5, ticketType=BUSINESS, payed=false, ticketPrice=20000]", t.toString());
+		Ticket t=new Ticket(111, 1,234,5,TicketType.BUSINESS,false);
+		System.out.println(t);
+		assertEquals("Ticket [ticketID=111, customerID=1, flightID=234, seatNumber=5, ticketType=BUSINESS, payed=false, ticketPrice=20000]", t.toString());
 	}
 
 }
