@@ -145,7 +145,7 @@ public class BookingManager implements BookingManagerInterface {
 		boolean payed = true;
 		Ticket ticket = new Ticket(ticketID, customerID, flightID, seatNumber, type, payed);
 		 
-		ticketMap.put(flightID, ticket);
+		ticketMap.put(ticketID, ticket);
 		
 	   } catch (FlightFullException e) {
 		      

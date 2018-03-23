@@ -24,6 +24,7 @@ import se.lexicon.model.BookingManager;
 import se.lexicon.model.Customer;
 import se.lexicon.model.CustomerWindow;
 import se.lexicon.model.Flight;
+import se.lexicon.model.Ticket;
 import se.lexicon.model.TicketType;
 
 public class MainWindow extends Application {
@@ -139,7 +140,13 @@ public class MainWindow extends Application {
         buttonBookings.setOnAction(new EventHandler<ActionEvent>() {
         	@Override
         	public void handle(ActionEvent event) {
-        		text1.setText("Bookings..............");
+        		Map<Integer, Ticket> tickets = manager.getTickets();
+        		StringBuilder builder = new StringBuilder();
+        		
+        		for(Ticket T : tickets.values()) {
+        			builder.append(T.toString() + "\n");
+        		}
+        		text1.setText(builder.toString());
         	}
         });
         
@@ -207,12 +214,11 @@ public class MainWindow extends Application {
         		try {
         			int id = manager.reserveTicket(customerid, flightid, ticketType);
             		
-            		text1.setText("TicketID: " + id);
-            		
             		if(cmbFood.getValue() != null) {
             			arrayItems.add(cmbFood.getValue());
             			manager.reserveFood(id, ticketType, arrayItems);
             		}
+            		text1.setText("New reservation succeeded [id] = " + id);
             		border.getBottom().setVisible(false);
 				} catch (FlightFullException e) {
 					if (e instanceof EconomyClassFullException) {
