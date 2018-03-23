@@ -3,6 +3,7 @@ package se.lexicon.model;
 
 
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.IntSummaryStatistics;
@@ -39,8 +40,18 @@ public class BookingManager implements BookingManagerInterface {
 		 menu=new Menu();
 
 		// One flight is created at start of bookingManager 
-		 Date departureTime = new Date();
-		 Date arrivalTime = new Date();
+		 //Date departureTime
+		 //Date arrivalTime = new Date();
+		 
+		 Calendar dt = Calendar.getInstance();
+		 Calendar at = Calendar.getInstance();
+		 dt.add(Calendar.HOUR, 10);
+		 at.add(Calendar.HOUR, 11);
+		 
+		 
+		 Date departureTime = dt.getTime();
+		 Date arrivalTime = at.getTime();
+		 
 		 String origin = "Stockholm";
 		 String destination = "Helsinki";
 		 createFlight(departureTime, arrivalTime, origin, destination);
