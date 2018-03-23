@@ -12,7 +12,7 @@ public class TicketTest {
 	@Test
 	public void test() {
 
-		Ticket t=new Ticket(1,234,5,TicketType.BUSINESS,false);
+		Ticket t=new Ticket(2,1,234,5,TicketType.BUSINESS,false);
 	
 		assertEquals("Ticket [customerID=1, flightID=234, seatNumber=5, ticketType=BUSINESS, payed=false, ticketPrice=20000]", t.toString());
 	}

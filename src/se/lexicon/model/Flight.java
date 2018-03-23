@@ -1,5 +1,6 @@
 package se.lexicon.model;
 
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -78,9 +79,11 @@ public class Flight implements FlightInterface {
 
 	@Override
 	public String toString() {
-		return "Flight [flightID=" + flightID + ", departureTime=" + departureTime + ", arrivalTime=" + arrivalTime
-				+ ", origin=" + origin + ", destination=" + destination + ", economySeats=" + economySeats
-				+ ", businessSeats=" + businessSeats + "]";
+		SimpleDateFormat departureFormat = new SimpleDateFormat("yyyy-MM-dd:HH:mm");
+//		return "Flight [flightID=" + flightID + ", departureTime=" + departureTime + ", arrivalTime=" + arrivalTime
+//				+ ", origin=" + origin + ", destination=" + destination + ", economySeats=" + economySeats
+//				+ ", businessSeats=" + businessSeats + "]";
+		return "[" + flightID + "]\t" + origin + "-" + destination + "\t\t" + departureFormat.format(departureTime) + "\t" + departureFormat.format(arrivalTime);
 	}
 	
 	

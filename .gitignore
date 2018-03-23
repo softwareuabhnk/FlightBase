@@ -1,9 +1,10 @@
-/out/
-/build/
-/target/
+/out
+/build
+/target
+/bin
 .FlightBase.iml
 .idea
 .project
 .classpath
 
-/bin/
+/bin
