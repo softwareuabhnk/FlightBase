@@ -1,6 +1,7 @@
 package se.lexicon.ui;
 
 import java.awt.Font;
+import java.util.ArrayList;
 import java.util.Map;
 
 import javafx.application.Application;
@@ -16,6 +17,9 @@ import javafx.scene.control.TextField;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.HBox;
 import javafx.stage.Stage;
+import se.lexicon.exception.BusinessClassFullException;
+import se.lexicon.exception.EconomyClassFullException;
+import se.lexicon.exception.FlightFullException;
 import se.lexicon.model.BookingManager;
 import se.lexicon.model.Customer;
 import se.lexicon.model.CustomerWindow;
@@ -23,21 +27,44 @@ import se.lexicon.model.Flight;
 import se.lexicon.model.TicketType;
 
 public class MainWindow extends Application {
+	BookingManager manager;
+	TextArea text1;
+	BorderPane border;
+	HBox hbox;
+	Button buttonFlights;
+	Button buttonCustomers;
+	Button buttonNewCustomer;
+	Button buttonMenu;
+	Button buttonBookings;
+	Button buttonNewBooking;
+	HBox bottomBox;
+	Label lblFlight;
+	ComboBox<Integer> cmbFlights;
+	ComboBox<Integer> cmbCustomers;
+	Label lblCustomer;
+	Label lblFlightType;
+	Label lblFood;
+	ComboBox<Integer> cmbFood;
+	ComboBox<TicketType> flightTypes;
+	//Button btnAddFood;
+	Button buttonOK;
+	Button buttonCancel;
+	Scene scene;
 	
-	@Override
-    public void start(Stage primaryStage) {
+	
+	public void init(Stage aStage) {
 		BookingManager manager = new BookingManager();
 		
-		TextArea text1 = new TextArea();
-		BorderPane border = new BorderPane();
+		text1 = new TextArea();
+		border = new BorderPane();
 		
-        HBox hbox = new HBox();
+        hbox = new HBox();
         hbox.setPadding(new Insets(15, 12, 15, 12));
         hbox.setSpacing(10);
         hbox.setStyle("-fx-background-color: #336699;");
 
         //Flights
-        Button buttonFlights = new Button("Flights");
+        buttonFlights = new Button("Flights");
         buttonFlights.setPrefSize(100, 20);
         buttonFlights.setOnAction(new EventHandler<ActionEvent>() {
         	@Override
@@ -53,7 +80,7 @@ public class MainWindow extends Application {
             }
         });
 
-        Button buttonCustomers = new Button("Customers");
+        buttonCustomers = new Button("Customers");
         buttonCustomers.setPrefSize(100, 20);
         buttonCustomers.setOnAction(new EventHandler<ActionEvent>() {
         	@Override
@@ -69,7 +96,7 @@ public class MainWindow extends Application {
         	}
         });
         
-        Button buttonNewCustomer = new Button("New Customers");
+        buttonNewCustomer = new Button("New Customers");
         buttonNewCustomer.setPrefSize(100, 20);
         buttonNewCustomer.setOnAction(new EventHandler<ActionEvent>() {
         	@Override
@@ -81,6 +108,7 @@ public class MainWindow extends Application {
         		if(c != null) {
         			Customer newCustomer = manager.registerCustomer(c.getName(), c.getAdress(), c.getPhoneNumber());
         			if(newCustomer != null) {
+        				cmbCustomers.getItems().add(newCustomer.getCustomerID());
         				text1.setText("New customer added \n" + newCustomer.toString());
         			}
         			else {
@@ -95,7 +123,18 @@ public class MainWindow extends Application {
         	}
         });
         
-        Button buttonBookings = new Button("Bookings");
+        buttonMenu = new Button("Menu");
+        buttonMenu.setPrefSize(100, 20);
+        buttonMenu.setOnAction(new EventHandler<ActionEvent>() {
+        	@Override
+        	public void handle(ActionEvent event) {
+        		TicketType type = flightTypes.getValue();
+        		String s = manager.getMenu(type);
+        		text1.setText(s);
+        	}
+        });
+        
+        buttonBookings = new Button("Bookings");
         buttonBookings.setPrefSize(100, 20);
         buttonBookings.setOnAction(new EventHandler<ActionEvent>() {
         	@Override
@@ -104,7 +143,7 @@ public class MainWindow extends Application {
         	}
         });
         
-        Button buttonNewBooking = new Button("New Bookings");
+        buttonNewBooking = new Button("New Bookings");
         buttonNewBooking.setPrefSize(100, 20);
         buttonNewBooking.setOnAction(new EventHandler<ActionEvent>() {
         	@Override
@@ -114,7 +153,7 @@ public class MainWindow extends Application {
         	}
         });
         
-        hbox.getChildren().addAll(buttonFlights, buttonCustomers,buttonNewCustomer, buttonBookings, buttonNewBooking);
+        hbox.getChildren().addAll(buttonFlights, buttonCustomers,buttonNewCustomer,buttonMenu, buttonBookings, buttonNewBooking);
         
         text1.setFont(new javafx.scene.text.Font(16));
         text1.setPrefRowCount(10);
@@ -124,38 +163,74 @@ public class MainWindow extends Application {
         
 //-------------------------------------------------------------------------------------------------------------        
         
-        HBox bottomBox = new HBox();
+        bottomBox = new HBox();
         bottomBox.setPadding(new Insets(15, 12, 15, 12));
         bottomBox.setSpacing(10);
         bottomBox.setStyle("-fx-background-color: #B3C7F7;");
         
-        Label lblFlight = new Label("Flight: ");
-        TextField txtFlight = new TextField();
-        Label lblCustomer = new Label("Customer: ");
-        TextField txtCustomer = new TextField();
-        Label lblFlightType = new Label("Type");
-        final ComboBox<TicketType> flightTypes = new ComboBox<>();
+        lblFlight = new Label("Flight: ");
+        cmbFlights = new ComboBox<>();
+        //cmbFlights.getItems().addAll(1);
+        //extField txtFlight = new TextField();
+        cmbCustomers = new ComboBox<>();
+        //cmbCustomers.getItems().addAll(1);
+        lblCustomer = new Label("Customer: ");
+        //TextField txtCustomer = new TextField();
+        lblFlightType = new Label("Type");
+        flightTypes = new ComboBox<>();
         flightTypes.getItems().addAll( TicketType.ECONOMY, TicketType.BUSINESS);//   "Buisness","Economy");
         flightTypes.setValue(TicketType.ECONOMY);
+        lblFood = new Label("Food");
+        cmbFood = new ComboBox<>();
+        cmbFood.getItems().addAll(1,2,3);
+//        btnAddFood = new Button("Add");
+//        btnAddFood.setPrefSize(100, 20);
         
-        Button buttonOK = new Button("Reserve");
+        buttonOK = new Button("Reserve");
         buttonOK.setPrefSize(100, 20);
         buttonOK.setOnAction(new EventHandler<ActionEvent>() {
         	@Override
         	public void handle(ActionEvent event) {
-        		border.getBottom().setVisible(false);
-        		//String type = (String) flightTypes.getValue();
-        		int customerid = Integer.parseInt(txtCustomer.getText());
-        		int flightid = Integer.parseInt(txtFlight.getText());
+        		if(cmbFlights.getValue() == null) {
+        			text1.setText("Please select a flight");
+        			return;
+        		}
+        		if(cmbCustomers.getValue() == null) {
+        			text1.setText("Please select a customer");
+        			return;
+        		}
+        		int flightid = cmbFlights.getValue();
+        		int customerid = cmbCustomers.getValue();
         		TicketType ticketType = flightTypes.getValue();
+        		ArrayList<Integer> arrayItems = new ArrayList<>();
         		
-        		int id = manager.reserveTicket(customerid, flightid, ticketType);
+        		try {
+        			int id = manager.reserveTicket(customerid, flightid, ticketType);
+            		
+            		text1.setText("TicketID: " + id);
+            		
+            		if(cmbFood.getValue() != null) {
+            			arrayItems.add(cmbFood.getValue());
+            			manager.reserveFood(id, ticketType, arrayItems);
+            		}
+            		border.getBottom().setVisible(false);
+				} catch (FlightFullException e) {
+					if (e instanceof EconomyClassFullException) {
+
+						text1.setText("Economy Class Full");
+
+					} else if (e instanceof BusinessClassFullException) {
+
+						text1.setText("Business Class Full");
+					}
+				}
         		
-        		text1.setText("Ok: " + id);
+        		
+        		
         	}
         });
         
-        Button buttonCancel = new Button("Cancel");
+        buttonCancel = new Button("Cancel");
         buttonCancel.setPrefSize(100, 20);
         buttonCancel.setOnAction(new EventHandler<ActionEvent>() {
         	@Override
@@ -165,7 +240,7 @@ public class MainWindow extends Application {
         });
         
         
-        bottomBox.getChildren().addAll(lblFlight,txtFlight,lblCustomer,txtCustomer,flightTypes,buttonOK,buttonCancel);
+        bottomBox.getChildren().addAll(lblFlight,cmbFlights,lblCustomer,cmbCustomers,lblFlightType,flightTypes,lblFood,cmbFood ,buttonOK,buttonCancel);
         
 //---------------------------------------------------------------------------------------------------------          
         
@@ -175,15 +250,33 @@ public class MainWindow extends Application {
         border.setCenter(text1);
         border.setBottom(bottomBox);
         
-        Scene scene = new Scene(border, 800, 650);
-        primaryStage.setScene(scene);
+        scene = new Scene(border, 900, 650);
         
-        primaryStage.setTitle("FlightBase");
-        primaryStage.setScene(scene);
-        primaryStage.show();
+        aStage.setScene(scene);
+        aStage.setTitle("FlightBase");
+        aStage.setScene(scene);
+        aStage.show();
+        
+//        primaryStage.setScene(scene);
+//        primaryStage.setTitle("FlightBase");
+//        primaryStage.setScene(scene);
+//        primaryStage.show();
         
         border.getBottom().setVisible(false);
         
+        Map<Integer, Flight> flightKeys = manager.getFlights();
+		cmbFlights.getItems().addAll(flightKeys.keySet());
+		
+		Map<Integer,Customer> customerKeys = manager.getCustomers();
+		cmbCustomers.getItems().addAll(customerKeys.keySet());
+		
+	}
+	
+	@Override
+    public void start(Stage primaryStage) {
+		init(primaryStage);
+		
+		
     }
 	
     /**
