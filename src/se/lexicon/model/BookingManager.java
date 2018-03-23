@@ -56,8 +56,8 @@ public class BookingManager implements BookingManagerInterface {
 		customerMap.put(customerID, customer2);
 		
 		customerID++;
-		Customer customer = new Customer(customerID, "Julia Jansson" , " 21", "153 459");		
-		customerMap.put(customerID, customer);
+		Customer customer3 = new Customer(customerID, "Julia Jansson" , " 21", "153 459");		
+		customerMap.put(customerID, customer3);
 				 
 	 }
 	 
@@ -184,6 +184,12 @@ public class BookingManager implements BookingManagerInterface {
 		 ticketMap.remove(ticketID);
 		
 	}
+	
+	
+	 public Map<Integer, Ticket >getTickets() {
+
+		  return ticketMap;	 
+	 }
 	
 	
 	public String getMenu(TicketType type) {

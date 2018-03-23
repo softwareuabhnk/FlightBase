@@ -22,6 +22,8 @@ public interface BookingManagerInterface {
 	
 	public Ticket getTicket(int ticketID);
 	
+	public Map<Integer, Ticket> getTickets();
+	
 	public int createFlight(Date departureTime, Date arrivalTime, String origin, String destination );
 	
 	public Flight getFlight(int flightID);
